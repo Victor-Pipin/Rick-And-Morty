@@ -2,7 +2,7 @@
 export const EpisodePage = () => {
     return (
         <div>
-            <h1>EpisodePage</h1>
+            <h1 className={"pageTitle"}>EpisodePage</h1>
         </div>
     )
 }

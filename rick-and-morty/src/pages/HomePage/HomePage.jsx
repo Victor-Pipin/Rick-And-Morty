@@ -5,10 +5,13 @@ import s from "./HomePage.module.css";
 // Компонент домашней страницы HomePage()
     // Три ссылки <NavLink to={"/locations"}>Locations</NavLink> для переходов на соответствующие страницы, 
     // вместо тега <a> который перезагружает страницу, NavLink не презагружает страницу, эти ссылки будут стилизоваться под кнопки
+        // Сначала к заголовку h1 применияютя общие(глобальные) стили pageTitle из файла index.css, для всех заголовков h1 в приложении, 
+        // но т.к. заголовок h1 домашней страницы больше остальных заголовков h1 на других страницах, к нему добавляются стили
+        // из css-модуля для домашней страницы ${s.title}, в которых лежит нужный размер шрифта, этот паттерн не допускает бойлерплэйт
 export const HomePage = () => {
     return (
         <div>
-            <h1 className={s.title}>The Rick and Morty</h1>
+            <h1 className={`pageTitle ${s.title}`}>The Rick and Morty</h1>
             <nav>
                 <NavLink to={"/characters"}>Characters</NavLink>
                 <NavLink to={"/locations"}>Locations</NavLink>
