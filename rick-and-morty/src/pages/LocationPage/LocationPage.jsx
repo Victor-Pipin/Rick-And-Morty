@@ -2,7 +2,7 @@
 export const LocationPage = () => {
     return (
         <div>
-            <h1>LocationPage</h1>
+            <h1 className={"pageTitle"}>LocationPage</h1>
         </div>
     )
 }
