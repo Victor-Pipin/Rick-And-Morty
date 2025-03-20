@@ -10,7 +10,7 @@ import s from "./HomePage.module.css";
         // из css-модуля для домашней страницы ${s.title}, в которых лежит нужный размер шрифта, этот паттерн не допускает бойлерплэйта
 export const HomePage = () => {
     return (
-        <div>
+        <div className={s.mainWrapper}>
             <h1 className={`pageTitle ${s.title}`}>The Rick and Morty</h1>
             <nav className={s.linkWrapper}>
                 <NavLink to={"/characters"} className={"linkButton"}>Characters</NavLink>
