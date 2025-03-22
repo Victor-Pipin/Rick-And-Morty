@@ -5,19 +5,20 @@
         // В теге nav вместо элементов <a>, ссылки <NavLink> из либы react-router, не перезагружают страницу при переходе
 import { NavLink } from "react-router"
 import logo from "../../../assets/img/logo.png"
+import s from "./Header.module.css"
 
 // Компонент общего Хедера для всего приложения, отображается на всех страницах
 export const Header = () => {
     return (
         <header>
-            <nav>
-                <NavLink to={"/"}>
-                    <img src={logo} alt="logotype" />
+            <nav className={s.container}>
+                <NavLink to={"/"} className={s.headerLink}>
+                    <img className={s.logo} src={logo} alt="logotype" />
                 </NavLink>
-                <NavLink to={"/"}>Home</NavLink>
-                <NavLink to={"/characters"}>Characters</NavLink>
-                <NavLink to={"/locations"}>Locations</NavLink>
-                <NavLink to={"/episodes"}>Episodes</NavLink>
+                <NavLink to={"/"} className={s.headerLink}>Home</NavLink>
+                <NavLink to={"/characters"} className={s.headerLink}>Characters</NavLink>
+                <NavLink to={"/locations"} className={s.headerLink}>Locations</NavLink>
+                <NavLink to={"/episodes"} className={s.headerLink}>Episodes</NavLink>
             </nav>
         </header>
     )
