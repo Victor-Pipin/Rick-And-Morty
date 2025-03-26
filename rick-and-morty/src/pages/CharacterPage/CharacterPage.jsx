@@ -7,15 +7,21 @@ import s from "./CharacterPage.module.css";
     // для отправки запроса на адрес(endpoint) указанный в скобках, для получения(get) данных персонажей
     // Метод get возвращает объект Promise, объект Promise имеет три метода(then, catch, finally), для работы с результатами ответа
     // Метод then((res)...) используется если ответ сервера положительный(заRESOLVEвился), res(ponse) это то, что пришло с сервера
-export const CharacterPage = () => { 
+    // Помещаю в функцию setCharacters(res.data.results) данные полученные с сервера(20 первых персонажей)
+        // В useState([]) при помощи метода setCharacters(res.data.results) устанавливаю значение для characters, данные полученные в res
+
+export const CharacterPage = () => {
+    const [characters, setCharacters] = useState([]);
 
     useEffect(() => {
-        axios.get("https://rickandmortyapi.com/api/character").then((res) => {})
+        axios.get("https://rickandmortyapi.com/api/character").then((res) => {
+            setCharacters(res.data.results)
+        })
     }, []);
 
     return (
         <div>
             <h1 className={"pageTitle"}>CharacterPage</h1>
         </div>
-    )
+    );
 }
