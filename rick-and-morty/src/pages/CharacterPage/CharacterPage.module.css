@@ -1,0 +1,29 @@
+/* Стили для контейнера персонажей */
+.characters {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Стили для карточки в которой будет отрисовываться 1 персонаж */
+.character {
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    background-color: var(--slate-700);
+    border-radius: 5px;
+}
+
+/* Стили для ссылки которая выступает в роли имени персонажа в карточке, над изображением персонажа,
+при нажатии на которую осуществляется переход к информации о персонаже */
+.characterLink {
+    color: var(--slate-50);
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+
+    &:hover {
+    text-decoration: none;
+    }
+}
