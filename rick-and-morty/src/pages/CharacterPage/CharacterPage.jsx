@@ -22,6 +22,18 @@ export const CharacterPage = () => {
     return (
         <div>
             <h1 className={"pageTitle"}>CharacterPage</h1>
+            {characters.length && (
+            <div className={s.characters}>
+                {characters.map((character) => {
+                    return (
+                        <div className={s.character}>
+                            <div className={s.characterLink}>{character.name}</div>
+                            <img src={character.image} alt={`${character.name} avatar`} />
+                        </div>
+                    )
+                })}
+            </div>
+            )}
         </div>
     );
 }
