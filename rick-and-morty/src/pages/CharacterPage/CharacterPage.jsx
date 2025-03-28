@@ -26,7 +26,7 @@ export const CharacterPage = () => {
             <div className={s.characters}>
                 {characters.map((character) => {
                     return (
-                        <div className={s.character}>
+                        <div key={character.id} className={s.character}>
                             <div className={s.characterLink}>{character.name}</div>
                             <img src={character.image} alt={`${character.name} avatar`} />
                         </div>
