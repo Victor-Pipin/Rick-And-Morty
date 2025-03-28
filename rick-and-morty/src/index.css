@@ -19,6 +19,12 @@ body {
   margin: 0;
 }
 
+/* Стили для контейнеров всех страниц */
+.pageContainer {
+  width: 1400px;
+  margin: 0 auto 50px;
+}
+
 /* Общие стили для заголовков h1, страниц приложения */
 .pageTitle {
   margin: 0;
