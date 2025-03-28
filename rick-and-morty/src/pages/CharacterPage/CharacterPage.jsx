@@ -20,7 +20,7 @@ export const CharacterPage = () => {
     }, []);
 
     return (
-        <div>
+        <div className={"pageContainer"}>
             <h1 className={"pageTitle"}>CharacterPage</h1>
             {characters.length && (
             <div className={s.characters}>
