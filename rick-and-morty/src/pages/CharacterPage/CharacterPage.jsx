@@ -22,6 +22,13 @@ import s from "./CharacterPage.module.css";
 export const CharacterPage = () => {
     const [characters, setCharacters] = useState([]);
 
+    const [info, setInfo] = useState({
+        count: 0,
+        pages: 0,
+        next: null,
+        prev: null,
+    })
+
     useEffect(() => {
         axios.get("https://rickandmortyapi.com/api/character").then((res) => {
             setCharacters(res.data.results)
