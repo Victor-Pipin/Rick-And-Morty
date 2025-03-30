@@ -35,6 +35,14 @@ export const CharacterPage = () => {
         })
     }, []);
 
+    const previosPageHandler = () => {
+        alert('previosPageHandler')
+    }
+
+    const nextPageHandler = () => {
+        alert('nextPageHandler')
+    }
+
     return (
         <div className={"pageContainer"}>
             <h1 className={"pageTitle"}>CharacterPage</h1>
@@ -51,10 +59,10 @@ export const CharacterPage = () => {
             </div>
             )}
             <div className={s.buttonsContainer}>
-                <button className="linkButton">
+                <button className="linkButton" onClick={previosPageHandler}>
                 Назад
                 </button>
-                <button className="linkButton">
+                <button className="linkButton" onClick={nextPageHandler}>
                 Вперед
                 </button>
             </div>
