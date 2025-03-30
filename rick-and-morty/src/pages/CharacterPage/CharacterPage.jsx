@@ -14,6 +14,12 @@
             // избежать ошибки если данные ещё не пришли с сервера и массив персонажей(characters) пустой
                 // previosPageHandler - функция-обработчик события на предыдущую страницу персонажей, для кнопки Назад
                 // nextPageHandler - функция-обработчик события на следущую страницу персонажей, для кнопки Вперед
+                    // Пагинация по страницам с персонажами: Завожу состояние для хранения информации о следующей странице с персонажами
+                    // const [info, setInfo] = useState({...}), в useEffect() устанавливаю эту информацию setInfo(res.data.info)
+                    // в хендлере nextPageHandler с помощью axios.get(info.next) отпарвляю запрос на адрес info.next, где находятся
+                    // следующие персонажи, затем устанавливаю их в состояние setCharacters(res.data.results) для отрисовки,
+                    // далее устанавливаю состояние где будет лежать следующая партия персонажей setInfo(res.data.info),
+                    // аналагично, в обратном порядке для хендлера previosPageHandler используя поле prev вместо next
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -32,15 +38,22 @@ export const CharacterPage = () => {
     useEffect(() => {
         axios.get("https://rickandmortyapi.com/api/character").then((res) => {
             setCharacters(res.data.results)
+            setInfo(res.data.info)
         })
     }, []);
 
     const previosPageHandler = () => {
-        alert('previosPageHandler')
+        axios.get(info.prev).then((res) => {
+            setCharacters(res.data.results)
+            setInfo(res.data.info)
+        })
     }
 
     const nextPageHandler = () => {
-        alert('nextPageHandler')
+        axios.get(info.next).then((res) => {
+            setCharacters(res.data.results)
+            setInfo(res.data.info)
+        })
     }
 
     return (
