@@ -20,6 +20,8 @@
                     // следующие персонажи, затем устанавливаю их в состояние setCharacters(res.data.results) для отрисовки,
                     // далее устанавливаю состояние где будет лежать следующая партия персонажей setInfo(res.data.info),
                     // аналагично, в обратном порядке для хендлера previosPageHandler используя поле prev вместо next
+                        // Использую фрагмент <></> т.к. условный рендеринг возвращает больше одного элемента: блок с персонажами
+                        // и блок с кнопками навигации Назад Вперед по страницам с персонажами
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -42,15 +44,15 @@ export const CharacterPage = () => {
         })
     }, []);
 
-    const previosPageHandler = () => {
-        axios.get(info.prev).then((res) => {
+    const nextPageHandler = () => {
+        axios.get(info.next).then((res) => {
             setCharacters(res.data.results)
             setInfo(res.data.info)
         })
     }
 
-    const nextPageHandler = () => {
-        axios.get(info.next).then((res) => {
+    const previosPageHandler = () => {
+        axios.get(info.prev).then((res) => {
             setCharacters(res.data.results)
             setInfo(res.data.info)
         })
@@ -60,25 +62,29 @@ export const CharacterPage = () => {
         <div className={"pageContainer"}>
             <h1 className={"pageTitle"}>CharacterPage</h1>
             {characters.length && (
-            <div className={s.characters}>
-                {characters.map((character) => {
-                    return (
-                        <div key={character.id} className={s.character}>
-                            <div className={s.characterLink}>{character.name}</div>
-                            <img src={character.image} alt={`${character.name} avatar`} />
-                        </div>
-                    )
-                })}
-            </div>
+                <>
+                {
+                    <div className={s.characters}>
+                        {characters.map((character) => {
+                            return (
+                                <div key={character.id} className={s.character}>
+                                    <div className={s.characterLink}>{character.name}</div>
+                                    <img src={character.image} alt={`${character.name} avatar`} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                }
+                    <div className={s.buttonsContainer}>
+                        <button className="linkButton" onClick={previosPageHandler}>
+                        Назад
+                        </button>
+                        <button className="linkButton" onClick={nextPageHandler}>
+                        Вперед
+                        </button>
+                    </div>
+                </>
             )}
-            <div className={s.buttonsContainer}>
-                <button className="linkButton" onClick={previosPageHandler}>
-                Назад
-                </button>
-                <button className="linkButton" onClick={nextPageHandler}>
-                Вперед
-                </button>
-            </div>
         </div>
     );
 }
