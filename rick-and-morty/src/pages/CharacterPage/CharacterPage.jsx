@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import s from "./CharacterPage.module.css";
 
 // Компонент страницы с персонажами мультсериала
     // В useEffect() использую библиотеку axios для запроса данных персонажей, для отрисовки на странице. В axios применяю метод get
@@ -15,6 +12,12 @@ import s from "./CharacterPage.module.css";
             // тогда выполняется второе выражение. Если первое выражение ложно (например, 0 или false), 
             // то второе выражение не выполняется, и результатом всего выражения будет значение первого, такая конструкция помогает 
             // избежать ошибки если данные ещё не пришли с сервера и массив персонажей(characters) пустой
+                // previosPageHandler - функция-обработчик события на предыдущую страницу персонажей, для кнопки Назад
+                // nextPageHandler - функция-обработчик события на следущую страницу персонажей, для кнопки Вперед
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import s from "./CharacterPage.module.css";
 
 export const CharacterPage = () => {
     const [characters, setCharacters] = useState([]);
@@ -40,6 +43,14 @@ export const CharacterPage = () => {
                 })}
             </div>
             )}
+            <div className={s.buttonsContainer}>
+                <button className="linkButton">
+                Назад
+                </button>
+                <button className="linkButton">
+                Вперед
+                </button>
+            </div>
         </div>
     );
 }
