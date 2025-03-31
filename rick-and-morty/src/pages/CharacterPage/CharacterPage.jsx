@@ -21,7 +21,13 @@
                     // далее устанавливаю состояние где будет лежать следующая партия персонажей setInfo(res.data.info),
                     // аналагично, в обратном порядке для хендлера previosPageHandler используя поле prev вместо next
                         // Использую фрагмент <></> т.к. условный рендеринг возвращает больше одного элемента: блок с персонажами
-                        // и блок с кнопками навигации Назад Вперед по страницам с персонажами
+                        // и блок с кнопками навигации Назад Вперед по страницам с персонажами, чтобы не создавать ещё один DOM-узел
+                            // Проведён рефакторинг дублируещегося кода:
+                            // запроса данных - axios.get("https://rickandmortyapi.com/api/character").then((res) в useEffect(),
+                            //                    axios.get(info.next).then((res) в nextPageHandler,
+                            //                    axios.get(info.prev).then((res) в previosPageHandler
+                            // и установки полученных данных в стэйты - setCharacters(res.data.results), setInfo(res.data.info),
+                            // в перчисленых функциях, путём создания функции fetchData, в которую и помещён дублирующийся код
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -37,25 +43,23 @@ export const CharacterPage = () => {
         prev: null,
     })
 
-    useEffect(() => {
-        axios.get("https://rickandmortyapi.com/api/character").then((res) => {
-            setCharacters(res.data.results)
-            setInfo(res.data.info)
-        })
-    }, []);
-
-    const nextPageHandler = () => {
-        axios.get(info.next).then((res) => {
+    const fetchData = (url) => {
+        axios.get(url).then((res) => {
             setCharacters(res.data.results)
             setInfo(res.data.info)
         })
     }
 
+    useEffect(() => {
+        fetchData("https://rickandmortyapi.com/api/character")
+    }, []);
+
+    const nextPageHandler = () => {
+        fetchData(info.next)
+    }
+
     const previosPageHandler = () => {
-        axios.get(info.prev).then((res) => {
-            setCharacters(res.data.results)
-            setInfo(res.data.info)
-        })
+        fetchData(info.prev)
     }
 
     return (
