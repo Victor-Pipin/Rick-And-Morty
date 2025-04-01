@@ -28,6 +28,10 @@
                             //                    axios.get(info.prev).then((res) в previosPageHandler
                             // и установки полученных данных в стэйты - setCharacters(res.data.results), setInfo(res.data.info),
                             // в перчисленых функциях, путём создания функции fetchData, в которую и помещён дублирующийся код
+                                // Отключаю кнопку Назад на первой странице персонажей и Вперед на последней странице персонажей,
+                                // чтобы не было ошибки т.к. адрес для перехода в этих кейсах равен null, для этого для кнопок
+                                // указываю атрибут disabled={info.prev === null} для кнопки Назад и disabled={next.prev === null}
+                                // для кнопки Вперед, где проверяю равен ли адрес для перехода null, если true, кнопка отключается
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -54,12 +58,12 @@ export const CharacterPage = () => {
         fetchData("https://rickandmortyapi.com/api/character")
     }, []);
 
-    const nextPageHandler = () => {
-        fetchData(info.next)
-    }
-
     const previosPageHandler = () => {
         fetchData(info.prev)
+    }
+
+    const nextPageHandler = () => {
+        fetchData(info.next)
     }
 
     return (
@@ -80,10 +84,10 @@ export const CharacterPage = () => {
                     </div>
                 }
                     <div className={s.buttonsContainer}>
-                        <button className="linkButton" onClick={previosPageHandler}>
+                        <button className="linkButton" disabled={info.prev === null} onClick={previosPageHandler}>
                         Назад
                         </button>
-                        <button className="linkButton" onClick={nextPageHandler}>
+                        <button className="linkButton" disabled={info.next === null} onClick={nextPageHandler}>
                         Вперед
                         </button>
                     </div>
