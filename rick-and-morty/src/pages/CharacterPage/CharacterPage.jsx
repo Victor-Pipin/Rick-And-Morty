@@ -33,11 +33,18 @@
                                 // указываю атрибут disabled={info.prev === null} для кнопки Назад и disabled={next.prev === null}
                                 // для кнопки Вперед, где проверяю равен ли адрес для перехода null, если true, кнопка отключается
                                     // Фильтрация, чтобы не получать всех персонажей, а только интересующих можно к адресу персонажей 
-                                    // добавить квери параметры, после основного адреса ставлю /, затем ?, далее доступный квери параметр
+                                    // добавить квери параметры, после основного адреса ставлю ?, далее доступный квери параметр
                                     // например name, потом = и значение для квери параметра например rick, если квери параметр name, то
                                     // поиск будет по именам персонажей например rick и результатом будут все персонажи имеющие это имя,
                                     // адрес всех персонажей - https://rickandmortyapi.com/api/character, квери параметр - /?name=rick,
                                     // полный запрос по имени персонажа - https://rickandmortyapi.com/api/character/?name=rick
+                                        // Поиск, реализован с помощью атрибута-обработчика события onChange={searchHandler} и 
+                                        // функции-обработчика searchHandler в поле ввода - поиск, введённое пользователем имя персонажа
+                                        // попадает в обьект event обработчика события onChange, далее в хендлере searchHandler из этого 
+                                        // объекта event с помощью свойств .currentTarget.value получаю имя которое ввёл пользователь,
+                                        // записываю эти данные в переменную value и передаю как значение квери параметра в функцию
+                                        // fetchData(`https://rickandmortyapi.com/api/character?name=${value}`) для получения персонажей
+                                        // соответствующих квери параметру и его значению, которое равно пользовательскому вводу
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -55,6 +62,7 @@ export const CharacterPage = () => {
 
     const fetchData = (url) => {
         axios.get(url).then((res) => {
+            debugger
             setCharacters(res.data.results)
             setInfo(res.data.info)
         })
@@ -72,10 +80,15 @@ export const CharacterPage = () => {
         fetchData(info.next)
     }
 
+    const searchHandler = (event) => {
+        const value = event.currentTarget.value
+        fetchData(`https://rickandmortyapi.com/api/character?name=${value}`)
+    }
+
     return (
         <div className={"pageContainer"}>
             <h1 className={"pageTitle"}>CharacterPage</h1>
-            <input type="search" className={s.search} />
+            <input type="search" className={s.search} onChange={searchHandler} placeholder="Search..." />
             {characters.length && (
                 <>
                 {
