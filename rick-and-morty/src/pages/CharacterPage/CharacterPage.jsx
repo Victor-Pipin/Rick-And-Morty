@@ -45,6 +45,20 @@
                                         // записываю эти данные в переменную value и передаю как значение квери параметра в функцию
                                         // fetchData(`https://rickandmortyapi.com/api/character?name=${value}`) для получения персонажей
                                         // соответствующих квери параметру и его значению, которое равно пользовательскому вводу
+                                            // Обработка ошибок в поиске, если в поле поиска вводится несуществующий сочетание букв
+                                            // имён персонажей, отрабатывает последнее валидное сочетание и отрисовываются персонажи 
+                                            // попадающие под него, а остальные символы несоответствуют возможным вариантам, что
+                                            // является ошибкой которую нужно обработать. Обработка ошибки осуществляется выводом текста
+                                            // указывающим на то, что таких персонажей не существует, который лежит в ответе сервера
+                                            // для метода обработки ошибок .catch((err)...) в случае неуспешного запроса. Для отрисовки
+                                            // этих данных завожу ещё одно состояние - const [error, setError] = useState(null), с
+                                            // начальным значением null, указывающим на то, что по умолчанию ошибок нет, 
+                                            // дублирую это значение setError(null) устанавливая это состояние при успешном запросе 
+                                            // данных в функции fetchData(), данные пришли значит ошибок - null. Далее в этой же функции
+                                            // с помощью метода обработки ошибок .catch((err)...) устанавливаю в состояние error данные 
+                                            // которые пришли с сервера для отрисовки в случае ошибки setError(err.response.data.error)
+                                            // которые и будут рендерится для пользователя
+                                            
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -52,6 +66,7 @@ import s from "./CharacterPage.module.css";
 
 export const CharacterPage = () => {
     const [characters, setCharacters] = useState([]);
+    const [error, setError] = useState(null)
 
     const [info, setInfo] = useState({
         count: 0,
@@ -61,10 +76,14 @@ export const CharacterPage = () => {
     })
 
     const fetchData = (url) => {
-        axios.get(url).then((res) => {
-            debugger
+        axios.get(url)
+        .then((res) => {
             setCharacters(res.data.results)
             setInfo(res.data.info)
+            setError(null)
+        })
+        .catch((err) => {
+            setError(err.response.data.error)
         })
     }
 
