@@ -68,9 +68,13 @@
                                             // проверку, что ошибки нет !error при отрисовке персонажей {!error && characters.length && ...,
                                             // при такой проверке персонажи не отрисовываются если есть ошибка, рендерится только сообщение
                                             // об ошибке
+// Чтобы сделать имя над изображением в карточке персонажа, ссылкой на страницу этого персонажа, использую компонент Link из библиотеки
+// react-router, в атрибуте to указываю на страницу какого персонажа следует преходить <Link to={`/characters/${character.id}`}... ,
+// использую обратные кавычки для динамического подставления параметра id персонажа соответствующего его имени в карточке                                        
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router";
 import s from "./CharactersPage.module.css";
 
 export const CharactersPage = () => {
@@ -115,7 +119,7 @@ export const CharactersPage = () => {
 
     return (
         <div className={"pageContainer"}>
-            <h1 className={"pageTitle"}>CharacterPage</h1>
+            <h1 className={"pageTitle"}>CharactersPage</h1>
             <input type="search" className={s.search} onChange={searchHandler} placeholder="Search..." />
             {error && <div className={"errorMessage"}>{error}</div>}
             {!error && characters.length && (
@@ -125,7 +129,9 @@ export const CharactersPage = () => {
                         {characters.map((character) => {
                             return (
                                 <div key={character.id} className={s.character}>
-                                    <div className={s.characterLink}>{character.name}</div>
+                                    <Link to={`/characters/${character.id}`} className={s.characterLink}>
+                                        {character.name}
+                                    </Link>
                                     <img src={character.image} alt={`${character.name} avatar`} />
                                 </div>
                             )
