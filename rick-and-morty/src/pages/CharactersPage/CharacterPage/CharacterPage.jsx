@@ -8,14 +8,46 @@
 // в компонентах React. Если в маршруте (<Route path="/characters/:id" element={<CharacterPage />} />) указан динамический сегмент(:id),
 // useParams вернёт объект с параметрами(123) из текущего URL/characters/123.
 
+import { useState, useEffect } from "react"
+import axios from "axios"
 import { useParams } from "react-router"
+import s from "./CharacterPage.module.css"
 
 export const CharacterPage = () => {
     const { id } = useParams()
 
+    const [character, setCharacter] = useState(null)
+
+    useEffect(() => {
+        axios.get(`https://rickandmortyapi.com/api/character/${id}`)
+        .then((res) => {
+            setCharacter(res.data)
+        })
+    }, [])
+
     return (
         <div className={"pageContainer"}>
-            <h1>Character id: {id}</h1>
+            {character !== null && (
+                <div className={s.container}>
+                    <h1 className={"pageTitle"}>{character.name}</h1>
+                    <div className={s.content}>
+                        <img className={s.img} src={character.image} alt={`Picture of ${character.name}`} />
+                        <div className={s.description}>
+                            <div className={s.statusContainer}>
+                                <div>{character.status} - {character.species}</div>
+                            </div>
+                            <div className={s.info}>
+                                <p className={s.subTitle}>Last known location:</p>
+                                <p className={s.subTitleResult}>{character.location.name}</p>
+                            </div>
+                            <div className={s.info}>
+                                <p className={s.subTitle}>Episode count:</p>
+                                <p className={s.subTitleResult}>{character.episode.length}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
