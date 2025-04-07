@@ -1,0 +1,57 @@
+
+/* Стили контейнера для: заголовка, карточки и кнопки */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Стили контейнера для карточки(контента) персонажа */
+.content {
+    display: flex;
+    background-color: var(--slate-700);
+    color: var(--slate-50);
+    width: 700px;
+    border-radius: 10px;
+    margin: 25px auto;
+}
+
+/* Стили для изображения персонажа */
+.img {
+    border-radius: 10px 0 0 10px;
+}
+
+/* Стили контейнера для текстовой информации о персонаже, описании персонажа */
+.description {
+    margin: 20px;
+}
+
+/* Стили для контейнера с информацией о статусе и виде персонажа */
+.statusContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Стили контейнера для информации о последней известной локации персонажа */
+.info {
+    margin-bottom: 20px;
+}
+
+/* Стили для заголовков запрашиваемой информации */
+.subTitle {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: var(--slate-400);
+    margin: 5px;
+}
+
+/* Стили для результата запрашиваемой выше информации в заголовках */
+.subTitleResult {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 5px;
+}
