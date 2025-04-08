@@ -7,10 +7,16 @@
 // Итог: useParams — это хук из библиотеки React Router, который позволяет получать параметры(123) из URL(URL/characters/123) 
 // в компонентах React. Если в маршруте (<Route path="/characters/:id" element={<CharacterPage />} />) указан динамический сегмент(:id),
 // useParams вернёт объект с параметрами(123) из текущего URL/characters/123.
+// В контексте компонента CharacterPage хранит id по которому осуществлялся переход из компонента CharactersPage на страницу персонажа
+    // Завожу состояние character, используя хук useEffect делаю запрос за данными персонажа, в эндпоинте использую id персонажа которое
+    // получил из хука useParams, полученные с сервера данные персонажа записываю в состояние character и в контексте этих данных, 
+    // возвращаю jsx-разметку с заголовком-именем персонажа и карточку с изображением и текстовой информацией о персонаже.
+// С помощью компонента <Link to={"/characters"}... , добавляю в jsx-разметку кнопку для возврата на страницу с персонажами
+// адрес /characters описан в роутах <Route path="/characters" element={<CharactersPage />} /> и ведёт на страницу с персонажами
 
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { useParams } from "react-router"
+import { useParams, Link } from "react-router"
 import s from "./CharacterPage.module.css"
 
 export const CharacterPage = () => {
@@ -46,6 +52,9 @@ export const CharacterPage = () => {
                             </div>
                         </div>
                     </div>
+                    <Link to={"/characters"} className={"linkButton"}>
+                        Go back
+                    </Link>
                 </div>
             )}
         </div>
