@@ -13,6 +13,8 @@
     // возвращаю jsx-разметку с заголовком-именем персонажа и карточку с изображением и текстовой информацией о персонаже.
 // С помощью компонента <Link to={"/characters"}... , добавляю в jsx-разметку кнопку для возврата на страницу с персонажами
 // адрес /characters описан в роутах <Route path="/characters" element={<CharactersPage />} /> и ведёт на страницу с персонажами
+    // С помощью функции getStatusClassName добавляю кружочек соответствующего цвета в зависимости от статуса(character.status) персонажа
+    // слева от текстовой информации о статусе персонажа
 
 import { useState, useEffect } from "react"
 import axios from "axios"
@@ -23,6 +25,30 @@ export const CharacterPage = () => {
     const { id } = useParams()
 
     const [character, setCharacter] = useState(null)
+
+    const getStatusClassName = (status) => {
+        let characterStatus
+
+        switch (status) {
+            case "Alive":
+                characterStatus = s.aliveStatus
+                break;
+
+            case "Dead":
+                characterStatus = s.deadStatus
+                break;
+
+            case "unknown":
+                characterStatus = s.unknownStatus
+                break;
+        
+            default:
+                characterStatus = ""
+                break;
+        }
+
+        return `${s.status} ${characterStatus}`
+    }
 
     useEffect(() => {
         axios.get(`https://rickandmortyapi.com/api/character/${id}`)
@@ -40,6 +66,7 @@ export const CharacterPage = () => {
                         <img className={s.img} src={character.image} alt={`Picture of ${character.name}`} />
                         <div className={s.description}>
                             <div className={s.statusContainer}>
+                                <div className={getStatusClassName(character.status)}></div>
                                 <div>{character.status} - {character.species}</div>
                             </div>
                             <div className={s.info}>
