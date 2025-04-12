@@ -13,13 +13,26 @@
     height: 40px;
 }
 
-/* Стили для ссылок  */
+/* Стили для ссылок навигации */
 .headerLink {
     color: var(--slate-800);
     font-size: 18px;
     text-align: center;
     margin-right: 20px;
 
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+/* Стили для ссылок(компонент NavLink) в активном(когда нажали на необходимую ссылку и произошёл переход на страницу) состоянии */
+.active {
+    font-weight: bold;
+    color: var(--slate-800);
+    font-size: 18px;
+    text-align: center;
+    margin-right: 20px;
+    
     &:hover {
         text-decoration: none;
     }
